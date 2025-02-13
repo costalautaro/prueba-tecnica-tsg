@@ -102,7 +102,7 @@ class Authenticate implements AuthenticatesRequests
         throw new AuthenticationException(
             'Unauthenticated.',
             $guards,
-            $request->expectsJson() ? null : $this->redirectTo($request),
+            response()->json(['error' => 'Unauthenticated.'], 401)
         );
     }
 

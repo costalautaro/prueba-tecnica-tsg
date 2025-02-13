@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -17,6 +18,7 @@ class AuthController extends Controller
         ]);
 
 
+
         if ($validator->fails()){
             return response()->json($validator->errors(), 422);
         }
@@ -24,12 +26,32 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request-> Hash::make($request->password),
+            'password' => Hash::make($request->password),
         ]);
 
         $token = JWTAuth::fromUser($user);
 
         return response()->json(compact('user', 'token'), 201);
+    }
+
+    public function login(Request $request){
+        $credentials = $request->only('email','password');
+
+        if (!$token = JWTAuth::attempt($credentials)){
+            return response()->json(['error' => 'Sin autorizacion'], 401);
+        }
+
+        return response()->json(compact('token'));
+    }
+
+    public function me(){
+        return response()->json(JWTAuth::user());
+    }
+
+    public function logout(){
+
+        JWTAuth::invalidate(JWTAuth::getToken());
+        return response()->json(['message' => 'Sesion cerrada con exito']);
     }
 
     //
