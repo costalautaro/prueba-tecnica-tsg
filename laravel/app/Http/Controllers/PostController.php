@@ -131,7 +131,7 @@ class PostController extends Controller
      *         description="Post actualizado exitosamente",
      *         @OA\JsonContent(ref="#/components/schemas/Post")
      *     ),
-     *     @OA\Response(response=403, description="No tienes permiso para modificar este post"),
+     *     @OA\Response(response=403, description="No tenes permiso para modificar este post"),
      *     @OA\Response(response=404, description="Post no encontrado"),
      *     @OA\Response(response=401, description="Token inválido o no proporcionado")
      * )
@@ -147,7 +147,7 @@ class PostController extends Controller
         $user = JWTAuth::parseToken()->authenticate();
 
         if ($post->user_id != $user->id) {
-            return response()->json(['error' => 'No tienes permiso para modificar este post'], 403);
+            return response()->json(['error' => 'No tenes permiso para modificar este post'], 403);
         }
 
         $validator = Validator::make($request->all(), [

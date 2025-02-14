@@ -95,10 +95,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Inicio de sesión correcto"
+                        "description": "Inicio de sesión y carga del token JWT"
                     },
                     "401": {
-                        "description": "Sin autorización"
+                        "description": "Credenciales inválidas"
                     }
                 }
             }
@@ -112,7 +112,7 @@
                 "operationId": "9d9bc556f927575aa492a88c28fe5908",
                 "responses": {
                     "200": {
-                        "description": "Datos del usuario logueado",
+                        "description": "Datos del usuario al autenticarse",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -136,7 +136,7 @@
                         }
                     },
                     "401": {
-                        "description": "Token inválido"
+                        "description": "Unauthorized"
                     }
                 },
                 "security": [
@@ -171,7 +171,7 @@
                         }
                     },
                     "401": {
-                        "description": "Token inválido"
+                        "description": "Unauthenticated."
                     }
                 },
                 "security": [
@@ -348,7 +348,7 @@
                         }
                     },
                     "403": {
-                        "description": "No tienes permiso para modificar este post"
+                        "description": "No tenes permiso para modificar este post"
                     },
                     "404": {
                         "description": "Post no encontrado"
@@ -460,7 +460,7 @@
                         }
                     },
                     "404": {
-                        "description": "Usuario no encontrado"
+                        "description": "El usuario no existe"
                     },
                     "401": {
                         "description": "No autorizado"
@@ -502,17 +502,17 @@
                                     "email": {
                                         "type": "string",
                                         "format": "email",
-                                        "example": "nuevoemail@test.com"
+                                        "example": "nuevocorreo@test.com"
                                     },
                                     "password": {
                                         "type": "string",
                                         "format": "password",
-                                        "example": "nuevopassword"
+                                        "example": "nuevapassword"
                                     },
                                     "password_confirmation": {
                                         "type": "string",
                                         "format": "password",
-                                        "example": "nuevopassword"
+                                        "example": "nuevapassword"
                                     }
                                 },
                                 "type": "object"
@@ -522,7 +522,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Usuario actualizado exitosamente"
+                        "description": "Usuario actualizado"
                     },
                     "401": {
                         "description": "No tenes permiso para modificar este usuario"

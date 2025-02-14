@@ -54,7 +54,7 @@ class UserController extends Controller
      *         description="Detalles del usuario",
      *         @OA\JsonContent(ref="#/components/schemas/User")
      *     ),
-     *     @OA\Response(response=404, description="Usuario no encontrado"),
+     *     @OA\Response(response=404, description="El usuario no existe"),
      *     @OA\Response(response=401, description="No autorizado")
      * )
      */
@@ -62,7 +62,7 @@ class UserController extends Controller
 
         $user = User::find($id);
         if(!$user) {
-            return response()->json(['message' => 'Usuario no encontrado'], 404);
+            return response()->json(['message' => 'El usuario no existe'], 404);
         }
         return response()->json($user, 200);
     }
@@ -84,12 +84,12 @@ class UserController extends Controller
      *         required=true,
      *         @OA\JsonContent(
      *             @OA\Property(property="name", type="string", example="Nuevo Nombre"),
-     *             @OA\Property(property="email", type="string", format="email", example="nuevoemail@test.com"),
-     *             @OA\Property(property="password", type="string", format="password", example="nuevopassword"),
-     *             @OA\Property(property="password_confirmation", type="string", format="password", example="nuevopassword")
+     *             @OA\Property(property="email", type="string", format="email", example="nuevocorreo@test.com"),
+     *             @OA\Property(property="password", type="string", format="password", example="nuevapassword"),
+     *             @OA\Property(property="password_confirmation", type="string", format="password", example="nuevapassword")
      *         )
      *     ),
-     *     @OA\Response(response=200, description="Usuario actualizado exitosamente"),
+     *     @OA\Response(response=200, description="Usuario actualizado"),
      *     @OA\Response(response=401, description="No tenes permiso para modificar este usuario"),
      *     @OA\Response(response=404, description="Usuario no encontrado")
      * )

@@ -76,8 +76,8 @@ class AuthController extends Controller
      *       @OA\Property(property="password", type="string", format="password", example="123456"),
      *     )
      *    ),
-     *   @OA\Response(response=200, description="Inicio de sesión correcto"),
-     *  @OA\Response(response=401, description="Sin autorización"),
+     *   @OA\Response(response=200, description="Inicio de sesión y carga del token JWT"),
+     *  @OA\Response(response=401, description="Credenciales inválidas"),
      *  )
      */
     public function login(Request $request)
@@ -85,7 +85,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (!$token = JWTAuth::attempt($credentials)) {
-            return response()->json(['error' => 'Sin autorización'], 401);
+            return response()->json(['error' => 'Credenciales inválidas'], 401);
         }
 
         return response()->json(compact('token'));
@@ -99,14 +99,14 @@ class AuthController extends Controller
      *     security={{"Bearer":{}}},
      *          @OA\Response(
      *         response=200,
-     *         description="Datos del usuario logueado",
+     *         description="Datos del usuario al autenticarse",
      *         @OA\JsonContent(
      *             @OA\Property(property="id", type="integer", example="1"),
      *             @OA\Property(property="name", type="string", example="Juan Perez"),
      *             @OA\Property(property="email", type="string", example="juan@example.com")
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Token inválido")
+     *     @OA\Response(response=401, description="Unauthorized"),
      * )
      */
     public function me()
@@ -127,7 +127,7 @@ class AuthController extends Controller
      *         @OA\Property(property="message", type="string", example="Sesión cerrada con éxito")
      *     )
      * ),
-     *  @OA\Response(response=401, description="Token inválido")
+     *  @OA\Response(response=401, description="Unauthenticated.")
      * )
      */
     public function logout()
