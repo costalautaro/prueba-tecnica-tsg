@@ -185,7 +185,7 @@ class PostController extends Controller
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Response(response=200, description="Post eliminado exitosamente"),
-     *     @OA\Response(response=401, description="No autorizado"),
+     *     @OA\Response(response=401, description="No tenes permiso para modificar este post"),
      *     @OA\Response(response=404, description="El post no existe")
      * )
      */
@@ -202,7 +202,7 @@ class PostController extends Controller
         $user = JWTAuth::parseToken()->authenticate();
 
         if ($post->user_id != $user->id) {
-            return response()->json(['error' => 'No autorizado'], 401);
+            return response()->json(['error' => 'No tenes permiso para modificar este post'], 401);
         }
 
         $post->delete();

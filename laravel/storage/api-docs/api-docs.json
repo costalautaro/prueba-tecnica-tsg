@@ -385,7 +385,7 @@
                         "description": "Post eliminado exitosamente"
                     },
                     "401": {
-                        "description": "No autorizado"
+                        "description": "No tenes permiso para modificar este post"
                     },
                     "404": {
                         "description": "El post no existe"

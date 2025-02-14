@@ -1,66 +1,101 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Documentación API TSG
+1. Instalación y Configuración del Proyecto
+1.1 Requisitos Previos
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+PHP 8.1 o superior
+Composer
+MySQL (o SQLite – ver Nota en sección 4)
 
-## About Laravel
+Laravel 11
+Extensiones PHP: pdo, pdo_mysql, mbstring, tokenizer, xml, ctype, json, openssl, gd
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1.2 Clonar el Repositorio
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+git clone https://github.com/costalautaro/prueba-tecnica-tsg
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1.3 Instalación de Dependencias
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+composer install
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1.4 Configuración del Entorno
 
-## Laravel Sponsors
+Copiar el archivo .env.example a .env
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Configurar la conexión a la base de datos:
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+DB_CONNECTION=mysql  
+DB_HOST=127.0.0.1  
+DB_PORT=3306  
+DB_DATABASE=user_post_hub  
+DB_USERNAME=root  
+DB_PASSWORD=root
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+en config/database.php 
+se puede cambiar el default para usar sqlite
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+IMPORTANTE:
+Hay que crear previamente la base de datos (con el nombre definido en DB_DATABASE, por ejemplo, user_post_hub) en tu gestor de bases de datos antes de ejecutar las migraciones.
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1.5 Generar la Clave de la Aplicación
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+php artisan key:generate
+
+
+1.6 Migraciones y Seeders
+
+
+php artisan migrate --seed
+
+2. Documentación de la API
+
+2.1 Documentación con Swagger
+
+Iniciar el servidor:
+
+php artisan serve
+
+Acceder a la documentación en:
+
+http://127.0.0.1:8000/api/documentation
+
+2.2 Uso de la Colección de Postman
+
+en la raiz esta el archivo
+API Prueba Técnica - Laravel 11.postman_collection.json que podes usar para probar además de swagger
+
+
+Abrir Postman-> Configure la variable base_url con el valor: http://127.0.0.1:8000 
+
+3. Seeders y Pruebas Unitarias
+
+3.1 Poblar la Base de Datos
+
+php artisan db:seed
+
+
+
+
+
+
+3.2 Ejecución de Pruebas Unitarias (no estaba en el enunciado pero asumí que eran importantes)
+
+
+
+php artisan test
+
+4. Consideraciones y Notas Adicionales
+Nota: En el archivo database.php se encuentra comentada la línea para poder usar SQLite. Se dejó de esa forma por si les resulta más práctico.
+
+Validaciones Adicionales:
+Dado que la API no implementa roles, solo se permite que el usuario autenticado que creó un post pueda eliminarlo.
+La misma lógica se aplica para la eliminación de usuarios: únicamente el usuario autenticado podrá borrar su propia cuenta.
+Observaciones / TODO:
+Hubiera sido ideal implementar pruebas unitarias y mejorar las pruebas de funcionalidad (features).
+Se sugiere estandarizar los mensajes errores que provienen de JWT a español para mayor consistencia con algun archivo de traduccion.
